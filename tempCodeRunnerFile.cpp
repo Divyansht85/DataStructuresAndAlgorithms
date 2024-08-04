@@ -1,0 +1,1 @@
+list.insert(7);
