@@ -1,6 +1,7 @@
 #include <iostream>
 #include <climits>
 #include <queue>
+#include <stack>
 using namespace std;
 class TreeNode
 {
@@ -86,7 +87,111 @@ void levelOrderTraversal(TreeNode *root)
         cout << endl;
     }
 }
+void preOrderIterative(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+    stack<TreeNode *> st;
+    st.push(root);
+    while (!st.empty())
+    {
+        TreeNode *curr = st.top();
+        st.pop();
+        cout << curr->data << " ";
+        if (curr->right != nullptr)
+            st.push(curr->right);
+        if (curr->left != nullptr)
+            st.push(curr->left);
+    }
+}
 
+void inOrderIterative(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+    TreeNode *curr = root;
+    stack<TreeNode *> st;
+    while (curr != nullptr || !st.empty())
+    {
+        while (curr != nullptr)
+        {
+            st.push(curr);
+            curr = curr->left;
+        }
+        curr = st.top();
+        cout << curr->data << " ";
+        st.pop();
+        curr = curr->right;
+    }
+}
+void preorderIterativeSpaceOptimized(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+    TreeNode *curr = root;
+    stack<TreeNode *> st;
+    while (!st.empty() || curr != nullptr)
+    {
+        while (curr != nullptr)
+        {
+            cout << curr->data << " ";
+            if (curr->right != nullptr)
+                st.push(curr->right);
+            curr = curr->left;
+        }
+        if (!st.empty())
+        {
+            curr = st.top();
+            st.pop();
+        }
+    }
+}
+void postOrderIterativeUsing2Stacks(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+    stack<TreeNode *> st1, st2;
+    st1.push(root);
+    while (!st1.empty())
+    {
+        TreeNode *curr = st1.top();
+        st2.push(curr);
+        st1.pop();
+        if (curr->left != nullptr)
+            st1.push(curr->left);
+        if (curr->right != nullptr)
+            st1.push(curr->right);
+    }
+    while (!st2.empty())
+    {
+        cout << st2.top()->data << " ";
+        st2.pop();
+    }
+}
+void postOrderUsing1Stack(TreeNode *root)
+{
+    if (root == nullptr)
+        return;
+    TreeNode *curr = root;
+    TreeNode *lastVisited = nullptr;
+    stack<TreeNode *> st;
+    while (curr != nullptr || !st.empty())
+    {
+        while (curr != nullptr)
+        {
+            st.push(curr);
+            curr = curr->left;
+        }
+        if (st.top()->right == nullptr || st.top()->right == lastVisited)
+        {
+            lastVisited = st.top();
+            cout << st.top()->data << " ";
+            st.pop();
+        }
+        else
+            curr = st.top()->right;
+    }
+}
 int main()
 {
     TreeNode *root = new TreeNode(1);
@@ -96,5 +201,5 @@ int main()
     root->left->right = new TreeNode(5);
     root->right->left = new TreeNode(6);
     root->right->right = new TreeNode(9);
-    levelOrderTraversal(root);
+    postOrderUsing1Stack(root);
 }
