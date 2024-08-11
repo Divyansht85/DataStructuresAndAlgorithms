@@ -58,6 +58,9 @@ void printTree(TreeNode *root)
     {
         cout << line << endl;
     }
+    cout << endl
+         << endl
+         << endl;
 }
 TreeNode *insertRecursive(TreeNode *root, int d)
 {
@@ -168,15 +171,47 @@ TreeNode *deleteNode(TreeNode *root, int x)
     }
     return root;
 }
+int ceil(TreeNode *root, int x)
+{
+    TreeNode *curr = root;
+    int ans = -1;
+    while (curr != nullptr)
+    {
+        if (curr->data == x)
+            return x;
+        if (curr->data < x)
+            curr = curr->right;
+        else
+        {
+            ans = curr->data;
+            curr = curr->left;
+        }
+    }
+    return ans;
+}
+int floor(TreeNode *root, int x)
+{
+    TreeNode *curr = root;
+    int ans = -1;
+    while (curr != nullptr)
+    {
+        if (curr->data == x)
+            return x;
+        if (curr->data > x)
+            curr = curr->left;
+        else
+        {
+            ans = curr->data;
+            curr = curr->right;
+        }
+    }
+    return ans;
+}
 int main()
 {
     TreeNode *root = nullptr;
     vector<int> v = {8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15};
     makeBST(root, v);
     printTree(root);
-    cout << endl
-         << endl
-         << endl;
-    root = deleteNode(root, 12);
-    printTree(root);
+    cout << floor(root, 0) << endl;
 }
