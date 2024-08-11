@@ -58,19 +58,19 @@ void buildMaxHeap(int *a, int size)
 void heapSortIncreasing(int *a, int size)
 {
     buildMaxHeap(a, size);
-    for (int i = 0; i < size - 1; i++)
+    for (int i = size - 1; i >= 1; i--)
     {
-        swap(a[0], a[size - 1 - i]);
-        maxHeapify(a, size - 1 - i, 0);
+        swap(a[0], a[i]);
+        maxHeapify(a, i, 0);
     }
 }
 void heapSortDecreasing(int *a, int size)
 {
     buildMinHeap(a, size);
-    for (int i = 0; i < size - 1; i++)
+    for (int i = size - 1; i >= 1; i--)
     {
-        swap(a[0], a[size - 1 - i]);
-        minHeapify(a, size - 1 - i, 0);
+        swap(a[0], a[i]);
+        minHeapify(a, i, 0);
     }
 }
 int main()

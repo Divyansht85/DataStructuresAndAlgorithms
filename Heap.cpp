@@ -104,9 +104,7 @@ public:
         arr[size - 1] = d;
 
         for (int i = size - 1; i > 0 && arr[i] < arr[parent(i)]; i = parent(i))
-        {
             swap(arr[i], arr[parent(i)]);
-        }
     }
 
     void minHeapify(int i)
@@ -155,9 +153,8 @@ public:
         if (i < size)
         {
             arr[i] = x;
-            for (i; i > 0; i = parent(i))
-                if (arr[i] < arr[parent(i)])
-                    swap(arr[i], arr[parent(i)]);
+            for (i; i > 0 && arr[i] < arr[parent(i)]; i = parent(i))
+                swap(arr[i], arr[parent(i)]);
         }
     }
     void deleteKey(int i)
@@ -273,9 +270,7 @@ public:
         arr[size - 1] = d;
 
         for (int i = size - 1; i > 0 && arr[i] > arr[parent(i)]; i = parent(i))
-        {
             swap(arr[i], arr[parent(i)]);
-        }
     }
 
     void maxHeapify(int i)
@@ -324,9 +319,8 @@ public:
         if (i < size)
         {
             arr[i] = x;
-            for (i; i > 0; i = parent(i))
-                if (arr[i] > arr[parent(i)])
-                    swap(arr[i], arr[parent(i)]);
+            for (i; i > 0 && arr[i] > arr[parent(i)]; i = parent(i))
+                swap(arr[i], arr[parent(i)]);
         }
     }
     void deleteKey(int i)
