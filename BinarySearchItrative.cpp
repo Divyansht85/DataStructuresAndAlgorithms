@@ -1,5 +1,41 @@
 #include <iostream>
 using namespace std;
+int getFloor(int *a, int n, int x)
+{
+    int floor = -1, low = 0, high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (x == a[mid])
+            return a[mid];
+        if (x < a[mid])
+            high = mid - 1;
+        else
+        {
+            floor = a[mid];
+            low = mid + 1;
+        }
+    }
+    return floor;
+}
+int getCeil(int *a, int n, int x)
+{
+    int ceil = -1, low = 0, high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (x == a[mid])
+            return x;
+        if (x < a[mid])
+        {
+            ceil = a[mid];
+            high = mid - 1;
+        }
+        else
+            low = mid + 1;
+    }
+    return ceil;
+}
 bool binarySearch(int *a, int low, int high, int x)
 {
     while (low <= high)
@@ -56,6 +92,6 @@ int lastOccurance(int *a, int n, int x)
 }
 int main()
 {
-    int arr[10] = {1, 2, 3, 6, 6, 6, 6, 7, 8, 9};
-    cout << lastOccurance(arr, 10, 6) << endl;
+    int arr[10] = {1, 2, 3, 5, 6, 6, 6, 7, 8, 9};
+    cout << getCeil(arr, 10, 4) << endl;
 }
