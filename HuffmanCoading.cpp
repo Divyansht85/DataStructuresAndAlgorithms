@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 struct Node
 {
@@ -55,6 +56,33 @@ class HuffmanCode
         for (const bool &b : bits)
             code += b ? "1" : "0";
         return code;
+    }
+    void serialize(Node *node, stringstream &ss)
+    {
+        if (!node)
+        {
+            ss << "# "; // Use '#' as a marker for null nodes
+            return;
+        }
+        ss << node->data << " " << node->freq << " ";
+        serialize(node->left, ss);
+        serialize(node->right, ss);
+    }
+
+    Node *deserialize(stringstream &ss)
+    {
+        string val;
+        ss >> val;
+        if (val == "#")
+            return nullptr; // Return null for marker
+
+        char data = val[0];
+        int frequency;
+        ss >> frequency;
+        Node *node = new Node(data, frequency);
+        node->left = deserialize(ss);
+        node->right = deserialize(ss);
+        return node;
     }
 
 public:
@@ -110,7 +138,7 @@ public:
 int main()
 {
     HuffmanCode obj;
-    string input = R"()";
+    string input = R"(Hi)";
     vector<bool> compressedData = obj.compress(input);
     cout << "Compressed data: ";
     for (const bool &b : compressedData)
