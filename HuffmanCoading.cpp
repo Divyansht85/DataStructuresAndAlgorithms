@@ -49,8 +49,6 @@ class HuffmanCode
             bits[i] = code[i] - '0';
         return bits;
     }
-
-    // Converts a vector of bytes to a string of bits
     string convertBitsToString(const vector<bool> &bits)
     {
         string code = "";
